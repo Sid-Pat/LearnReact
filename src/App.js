@@ -2,11 +2,15 @@ import './App.css';
 import About from './Component/About';
 import Navbar from './Component/Navbar';
 import TextForm from './Component/TextForm';
+import React, {useState} from 'react';
 
 function App() {
+
+  const [mode,setMode] = useState('light');
+
   return (
     <>
-      <Navbar title="TextUtils"  />
+      <Navbar title="TextUtils" mode={mode} />
 
       <div className="container my-3">
         <TextForm heading="Enter the text to analyse"/>
