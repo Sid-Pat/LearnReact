@@ -6,12 +6,14 @@ export default function TextForm(props) {
     // console.log("UpperCaseClicked"+text);
     let newText = text.toUpperCase();
     setText(newText);
+    props.showAlert("UpperCase converted","success");
   }
 
   const handleLowClick = () => {
     // console.log("LowerCaseClicked"+text);
     let newText = text.toLowerCase();
     setText(newText);
+    props.showAlert("LowerCase converted","success");
   }
 
   const handleOnChange = (event) => {
@@ -22,6 +24,7 @@ export default function TextForm(props) {
   const handleClearScr = () => {
     let newText = " " ;
     setText(newText);
+    props.showAlert("Text Area cleared","success");
   }
 
   const handleCopy = () => {
@@ -29,21 +32,25 @@ export default function TextForm(props) {
     // console.log("Selected");
     tid.select();
     navigator.clipboard.writeText(tid.value); 
+    props.showAlert("Copied to clipboard","success");
+
   }
 
   const handleExtraSpaces = () => {
     let newText = text.split(/[ ]+/);
     setText(newText.join(" "));
+    props.showAlert("Extra spaces removed","success");
+
   }
 
   const [text,setText] = useState('');
 
   return (
     <>
-    <div className='container'>
-        <h1>{props.heading}</h1>
-        <div className="mb-3">
-          <textarea className="form-control" value={text} onChange={handleOnChange} id="txtArea" rows="8"></textarea>
+    <div className={`container {props.mode=="dark"?"#2c3070":"white"}`}>
+        <h1 style={{color:props.mode==="dark"?"white":"black"}}>{props.heading}</h1>
+        <div className={`my-3 {props.mode=="dark"?"#2c3070":"white"}`}>
+          <textarea className="form-control" value={text} onChange={handleOnChange} style={{backgroundColor:props.mode==="dark"?"grey":"white",color:props.mode==="dark"?"white":"black"}} id="txtArea" rows="8"></textarea>
         </div>
 
         <button className="btn btn-primary" onClick={handleUpClick}>Convert to UpperCase</button>
@@ -60,7 +67,7 @@ export default function TextForm(props) {
       <p>{0.008 * (text.split(" ").length-1)} minutes Reading Time</p>
       <p>{text.split('.').length-1} sentences</p>
       <h2>Preview</h2>
-      <p>{text}</p>
+      <p>{text.length>0?text:"Enter the text to preview it here ..."}</p>
     </div>
     </>
   )
